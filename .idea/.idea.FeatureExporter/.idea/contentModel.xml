@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$USER_HOME$/.Rider2019.3/system/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/.Rider2019.3/system/resharper-host/local/Transient/ReSharperHost/v193/SolutionCaches/_FeatureExporter.-1625001126.00" t="ExcludeRecursive" />
+    <e p="$PROJECT_DIR$" t="IncludeFlat">
+      <e p="FeatureExporter" t="IncludeRecursive">
+        <e p="FeatureExporter.csproj" t="IncludeRecursive" />
+        <e p="Log.cs" t="Include" />
+        <e p="Mongo" t="Include">
+          <e p="ArchivedMongoArticle.cs" t="Include" />
+          <e p="MongoUtils.cs" t="Include" />
+        </e>
+        <e p="NYTimesExport.cs" t="Include" />
+        <e p="Program.cs" t="Include" />
+        <e p="Settings.cs" t="Include" />
+        <e p="bin" t="ExcludeRecursive" />
+        <e p="obj" t="ExcludeRecursive">
+          <e p="Debug" t="Include">
+            <e p="netcoreapp3.1" t="Include">
+              <e p="FeatureExporter.AssemblyInfo.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="FeatureExporter.sln" t="IncludeFlat" />
+      <e p="packages" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
