@@ -17,5 +17,7 @@ namespace FeatureExporter
         public bool CheckExisting { get; set; }
         
         public string User { get; set; }
+        
+        public List<Keyword> ConcernKeywords { get; set; }
     }
 }

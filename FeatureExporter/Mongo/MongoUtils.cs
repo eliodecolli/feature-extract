@@ -118,5 +118,39 @@ namespace FeatureExporter.Mongo
             
             Log.Info("All articles have been updated :)");
         }
+
+        public void UpdateConcerns()
+        {
+            Log.Info($"[{settings.User}] Updating concern levels...");
+            
+            var collection = client.GetDatabase("ny_times").GetCollection<ArchivedMongoArticle>("articles");
+
+            var userFilter = Builders<ArchivedMongoArticle>.Filter.Eq(x => x.User, settings.User);
+            //var doneFilter = Builders<ArchivedMongoArticle>.Filter.Eq(x => x.Done, false);
+            var contentsFilterBase = Builders<ArchivedMongoArticle>.Filter.Eq(x => x.GZipContents, new byte[0]);
+            var contentsFilter = Builders<ArchivedMongoArticle>.Filter.Not(contentsFilterBase);
+            
+            var articles = collection.Find(Builders<ArchivedMongoArticle>.Filter.And(userFilter/*, doneFilter*/, contentsFilter));
+
+            if (articles.CountDocuments() > 0)
+            {
+                foreach (var article in articles.ToList())
+                {
+                    File.WriteAllBytes("test.txt", article.GZipContents);
+                    return;
+                    Log.Info($"Updating concern level for article \"{article.ArticleId}\"...");
+                    var concernAnalyzer = new ArticleConcernAnalyzer(article.GZipContents, settings.ConcernKeywords.ToArray());
+
+                    article.ConcernLevel = concernAnalyzer.RetrieveConcern();
+                    article.Done = true;
+                    collection.FindOneAndUpdate(Builders<ArchivedMongoArticle>.Filter.Eq(x => x._id, article._id),
+                        new ObjectUpdateDefinition<ArchivedMongoArticle>((article)));
+                }
+            }
+            else
+            {
+                Log.Info("All concern levels seem to be updated!");
+            }
+        }
     }
 }

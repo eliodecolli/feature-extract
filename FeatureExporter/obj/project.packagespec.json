@@ -1,10 +1,10 @@
 ﻿{
   "version": "1.0.0",
   "restore": {
-    "projectUniqueName": "/root/RiderProjects/FeatureExporter/FeatureExporter/FeatureExporter.csproj",
+    "projectUniqueName": "/home/elio/source/FeatureExporter/feature-extract/FeatureExporter/FeatureExporter.csproj",
     "projectName": "FeatureExporter",
-    "projectPath": "/root/RiderProjects/FeatureExporter/FeatureExporter/FeatureExporter.csproj",
-    "outputPath": "/root/RiderProjects/FeatureExporter/FeatureExporter/obj/",
+    "projectPath": "/home/elio/source/FeatureExporter/feature-extract/FeatureExporter/FeatureExporter.csproj",
+    "outputPath": "/home/elio/source/FeatureExporter/feature-extract/FeatureExporter/obj/",
     "projectStyle": "PackageReference",
     "originalTargetFrameworks": [
       "netcoreapp3.1"
