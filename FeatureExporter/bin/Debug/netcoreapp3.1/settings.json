@@ -1,1 +1,80 @@
-{"Key":"glGueV2hkNEZgQ5awAZV6lN1iAUK3p5l","TotalPages":9,"StartPage":34,"Keywords":["coronavirus","covid-19","covid"],"Cookies":"/home/elio/Downloads/cookies.json","CheckExisting":true,"User":"Elio","ConcernKeywords":[{"Value":"cases","Boosters":["rise","risen","more","highest","high"]},{"Value":"deaths","Boosters":["rise","risen","more","highest","high"]},{"Value":"gatherings","Boosters":["more","seen","been"]},{"Value":"died","Boosters":["has","have","more"]},{"Value":"tested","Boosters":["positive","more","being"]}]}
+{
+  "Key": "api-key",
+  "TotalPages": 9,
+  "StartPage": 0,
+  "Keywords": [
+    "coronavirus",
+    "covid-19",
+    "covid"
+  ],
+  "Cookies": "/path/to/cookies.json",
+  "CheckExisting": true,
+  "User": "Elio",
+  "ConcernKeywords": [
+    {
+      "Value": "cases",
+      "Boosters": [
+        "rise",
+        "risen",
+        "more",
+        "highest",
+        "high"
+      ]
+    },
+    {
+      "Value": "deaths",
+      "Boosters": [
+        "rise",
+        "risen",
+        "more",
+        "highest",
+        "high"
+      ]
+    },
+    {
+      "Value": "gatherings",
+      "Boosters": [
+        "more",
+        "seen",
+        "been"
+      ]
+    },
+    {
+      "Value": "died",
+      "Boosters": [
+        "has",
+        "have",
+        "more"
+      ]
+    },
+    {
+      "Value": "tested",
+      "Boosters": [
+        "positive",
+        "more",
+        "being"
+      ]
+    },
+    {
+      "Value": "test",
+      "Boosters": [
+        "positive"
+      ]
+    },
+    {
+      "Value": "admitted",
+      "Boosters": [
+        "into",
+        "ICU",
+        "intensive",
+        "care"
+      ]
+    },
+    {
+      "Value": "life",
+      "Boosters": [
+        "lost"
+      ]
+    }
+  ]
+}

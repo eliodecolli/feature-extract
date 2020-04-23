@@ -1,19 +1,33 @@
+/*
+ *    File Name:
+ *         NYTimesExport.cs
+ * 
+ *    Purpose:
+ *         Use the New York Times API to retrieve articles containing a given set of keywords.
+ *
+ *     Author:
+ *         Elio Decolli
+ * 
+ *     Last Updated:
+ *         22/04/2020 - 10:34 PM
+ */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
 namespace FeatureExporter
 {
+    /// <summary>
+    /// An article retrieved from the API.
+    /// </summary>
     public class Article
     {
         public string ID { get; private set; }
         
         public string Title { get; private set; }
-        
-        public string Content { get; private set; }
         
         public DateTime OriginalDate { get; private set; }
         
@@ -21,12 +35,9 @@ namespace FeatureExporter
         
         public string User { get; private set; }
 
-        private CookieCollection cookies;
-
-        public Article(JToken part, CookieCollection cookies, string user)
+        public Article(JToken part, string user)
         {
             User = user;
-            this.cookies = cookies;
 
             ID = part["_id"].Value<string>();
             
@@ -36,26 +47,24 @@ namespace FeatureExporter
             string dt = part["pub_date"].Value<string>();
             OriginalDate = DateTime.Parse(dt);
         }
-
-        public void UpdateContent()
-        {
-            
-        }
     }
     
-    public class NYTimesExport
+    public class NyTimesExport
     {
         public List<Article> Articles { get; private set; }
 
         private Settings settings;
         
         
-         public NYTimesExport(Settings settings)
+         public NyTimesExport(Settings settings)
          {
              Log.Info("Extracting cookies");
              this.settings = settings;
          }
 
+         /// <summary>
+         /// Updates the Articles property, either from the cached file(s) on disk or from a new API call.
+         /// </summary>
          public void Export()
          {
              bool flag = false;
@@ -66,15 +75,6 @@ namespace FeatureExporter
                      flag = true;
                      break;
                  }
-             }
-             
-             var jar = new CookieCollection();
-             
-             var job = JArray.Parse(File.ReadAllText(settings.Cookies));
-
-             foreach (var token in job)
-             {
-                 jar.Add(new Cookie(token["Name raw"].ToString(), token["Content raw"].ToString(), token["Path raw"].ToString(), "nytimes.com"));
              }
              Articles = new List<Article>();
 
@@ -115,7 +115,7 @@ namespace FeatureExporter
              
                  foreach (var token in docs)
                  {
-                     Articles.Add(new Article(token, jar, settings.User));
+                     Articles.Add(new Article(token, settings.User));
                  }
              }
          }

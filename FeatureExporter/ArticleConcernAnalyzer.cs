@@ -1,14 +1,37 @@
+/*
+ *    File Name:
+ *         ArticleConcernAnalyzer.cs
+ * 
+ *    Purpose:
+ *         Makes use of a Core Analyzer to split the text.
+ *         Abstracts away the internals and allows to implement additional builder configurations for an analysis. (Even though this is not the case here =\)
+ *
+ *     Author:
+ *         Elio Decolli
+ * 
+ *     Last Updated:
+ *         22/04/2020 - 10:56 PM
+ */
+
 using System.Collections.Generic;
 using System.Linq;
 using FeatureExporter.Analyzer;
 
 namespace FeatureExporter
 {
-
+    /// <summary>
+    /// A concern keyword.
+    /// </summary>
     public class Keyword
     {
+        /// <summary>
+        /// Value of the keyword.
+        /// </summary>
         public string Value { get; set; }
         
+        /// <summary>
+        /// Boosters associated with the keyword.
+        /// </summary>
         public List<string> Boosters { get; set; }
     }
     

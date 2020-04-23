@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+ *
+ *     Shoutout to NTAuthority from the old alterIWNet and fourdeltaone projects. I've been using this file for convenience so long I've lost count. :)
+ * 
+ */
+
+using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
 using System.IO;
 using System.Text;
-using System.Threading;
 
 public enum LogLevel
 {

@@ -1,8 +1,22 @@
-﻿using System;
-using System.CodeDom.Compiler;
+﻿/*
+ *    File Name:
+ *         Program.cs
+ * 
+ *    Purpose:
+ *         Experimental stuff.
+ *
+ *     Author:
+ *         Elio Decolli
+ * 
+ *     Last Updated:
+ *         22/04/2020 - 10:34 PM
+ *
+ *     TODO:
+ *         [] Perhaps turn this into a CLI ?
+ */
+
 using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
 using FeatureExporter.Mongo;
 using Newtonsoft.Json;
 
@@ -79,7 +93,7 @@ namespace FeatureExporter
             {
                 nsettings = new Settings()
                 {
-                    Key = "glGueV2hkNEZgQ5awAZV6lN1iAUK3p5l",    // and this
+                    Key = "api-key",    // and this
                     Keywords = new List<string>()
                     {
                         "coronavirus",
@@ -88,7 +102,7 @@ namespace FeatureExporter
                     },
                     StartPage = 34,
                     TotalPages = 9,
-                    Cookies = "/home/elio/Downloads/cookies.json",  // update this accordingly
+                    Cookies = "/Path/To/cookies.json",  // update this accordingly
                     CheckExisting = true,
                     User = "Elio",     // also this
                     ConcernKeywords = DefaultKeywords()
@@ -104,19 +118,20 @@ namespace FeatureExporter
                 nsettings = JsonConvert.DeserializeObject<Settings>(json);
             }
             
-            var exp = new NYTimesExport(nsettings);
-            exp.Export();
+            // some stuff..
+            
+            //var exp = new NYTimesExport(nsettings);
+            //exp.Export();
 
-            var mongo = new MongoUtils(nsettings);
-            mongo.SaveArticles(exp.Articles);
-            mongo.StartUploadingContents();
+            //var mongo = new MongoUtils(nsettings);
+            //mongo.SaveOnDisk();
+            //mongo.SaveArticles(exp.Articles);
+            //mongo.StartUploadingContents();*/
             
             //mongo.UpdateConcerns();
-
-            /*var tt = File.ReadAllBytes("test.txt");
-            var cc = new ArticleConcernAnalyzer(tt, nsettings.ConcernKeywords.ToArray());
-
-            Log.Info(cc.RetrieveConcern().ToString());*/
+            //mongo.UpdateConcernsLocally();
+            
+            //mongo.GenerateCSVLocally();
         }
     }
 }
