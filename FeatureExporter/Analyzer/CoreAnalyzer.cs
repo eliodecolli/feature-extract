@@ -1,11 +1,28 @@
+/*
+ *    File Name:
+ *         CoreAnalyzer.cs
+ * 
+ *    Purpose:
+ *         Perform a tokenization using Open NLP and analyze the current concern level of a text based on a given list of keywords.
+ *
+ *     Author:
+ *         Elio Decolli
+ * 
+ *     Last Updated:
+ *         22/04/2020 - 10:34 PM
+ *
+ *     TODO:
+ *         [] Use a standard naming convention for variables.
+ *         [] Assign each booster a "power".
+ */
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using MongoDB.Bson.Serialization.Serializers;
+using OpenNLP.Tools.SentenceDetect;
+using OpenNLP.Tools.Tokenize;
 
 namespace FeatureExporter.Analyzer
 {
@@ -16,6 +33,8 @@ namespace FeatureExporter.Analyzer
         private List<string> keywords;
 
         private Dictionary<string, List<string>> boosters;
+        
+        private static EnglishMaximumEntropySentenceDetector sd = new EnglishMaximumEntropySentenceDetector(Path.Combine(Environment.CurrentDirectory, "Model", "EnglishSD.nbin"));
 
         public CoreAnalyzer(byte[] gzippedBlob, List<string> keywords, Dictionary<string, List<string>> boosters)
         {
@@ -24,27 +43,36 @@ namespace FeatureExporter.Analyzer
             using var gzip = new GZipStream(ccmem, CompressionMode.Decompress);
             
             gzip.CopyTo(nstream);
-            blob = Encoding.ASCII.GetString(nstream.ToArray());
+            blob = Encoding.UTF8.GetString(nstream.ToArray());
             
-            File.WriteAllText("lala.txt", blob);
-
             this.keywords = keywords;
             this.boosters = boosters;
         }
 
+        /// <summary>
+        /// Split the text into sentences.
+        /// </summary>
         public Sentence[] Tokenize()
         {
-            var matches = Regex.Matches("blob", @"[A-Za-z](.*?|\n?|\r?)*?[.?!]+(?=\W)");
+            var matches = sd.SentenceDetect(blob);
+            
             var retval = new List<Sentence>();
             
-            foreach (Match match in matches)
+            var sb = new StringBuilder();
+            
+            foreach (var match in matches)
             {
+                sb.AppendLine(match);
+                
                 var sentence = new Sentence()
                 {
                     Tokens = new List<Token>(),
                     ConcernLevel = 0
                 };
-                foreach (var word in match.Value.Split(" "))
+                var tokenizer = new EnglishRuleBasedTokenizer(false);
+                var words = tokenizer.Tokenize(match);
+                
+                foreach (var word in words)
                 {
                     var token = new Token()
                     {
@@ -59,6 +87,10 @@ namespace FeatureExporter.Analyzer
             return retval.ToArray();
         }
 
+        /// <summary>
+        /// Analyzes the given sentences and assigns them a concern level.
+        /// </summary>
+        /// <param name="tokens">The sentences which make up a text.</param>
         public void UpdateTokens(Sentence[] tokens)
         {
             foreach (var sentence in tokens)
@@ -85,7 +117,6 @@ namespace FeatureExporter.Analyzer
                 }
 
                 sentence.ConcernLevel = (int) Math.Ceiling(currentConcern);
-                Log.Info($"Concern: +{sentence.ConcernLevel}");
             }
         }
     }

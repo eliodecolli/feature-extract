@@ -1,10 +1,26 @@
+/*
+ *    File Name:
+ *         ArchivedMongoArticle.cs
+ * 
+ *    Purpose:
+ *         General-purpose aggregate document. Represents an exported article on Mongo.
+ *
+ *     Author:
+ *         Elio Decolli
+ * 
+ *     Last Updated:
+ *         22/04/2020 - 10:34 PM
+ */
+
 using System;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 
 namespace FeatureExporter.Mongo
 {
     public class ArchivedMongoArticle
     {
+        [JsonIgnore]   // while playing locally with JSON.
         public ObjectId _id { get; set; }
         
         public string ArticleId { get; set; }
